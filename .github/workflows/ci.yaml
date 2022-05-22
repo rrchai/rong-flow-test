@@ -9,6 +9,7 @@ on:
         type: choice
         options:
           - staging
+          - release
 
 
 jobs:
@@ -21,8 +22,18 @@ jobs:
       GITHUB_PAT: ${{ secrets.REPO_PAT }}
 
     steps:
-      - name: step 1
+      - name: Determine deployment sites
         run: |
-          echo "${{ github.event.inputs.site }}"
+          if ${{ github.event.inputs.site == 'staging'}}
+          then
+            echo 'SITE=staging' >> $GITHUB_ENV
+          else
+            echo 'SITE=release' >> $GITHUB_ENV
+          fi
+
+      - name: step2
+        run: |
+          echo '${{ env.SITE }}'
+
 
 
