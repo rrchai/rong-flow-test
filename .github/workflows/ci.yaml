@@ -32,12 +32,12 @@ jobs:
       
       - name: Get branch/tag name
         run: |
-          echo 'REF_NAME=$(echo $GITHUB_REF | cut -d'/' -f 3)' >> $GITHUB_ENV
+          echo "REF_NAME=$(echo $GITHUB_REF | cut -d'/' -f 3)" >> $GITHUB_ENV
 
       - name: step2
         if: env.SITE == 'release'
         run: |
-          echo '${{env.REF_NAME}}'
+          echo "${{ env.REF_NAME }}"
 
 
 
