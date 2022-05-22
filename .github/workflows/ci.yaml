@@ -29,7 +29,6 @@ jobs:
           else
             echo 'SITE=release' >> $GITHUB_ENV
           fi
-          echo '${{ github.ref##*/ }}'
       
       - name: Get branch/tag name
         run: |
