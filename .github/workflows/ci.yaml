@@ -8,7 +8,7 @@ on:
         required: true
         type: choice
         options:
-        - staging
+          - staging
 
 
 jobs:
@@ -24,6 +24,5 @@ jobs:
       - name: step 1
         run: |
           echo "${{ github.event.inputs.site }}"
-        env:
 
 
