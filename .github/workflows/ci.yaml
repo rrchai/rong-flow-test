@@ -3,9 +3,12 @@ name: ci
 on:
   workflow_dispatch:
     inputs:
-      version:
-        description: 'version'     
+      site:
+        description: 'which instance site would your like to manually re-deploy?'    
         required: true
+        type: choice
+        options:
+        - staging
 
 
 jobs:
@@ -20,4 +23,7 @@ jobs:
     steps:
       - name: step 1
         run: |
-          echo "works"
+          echo "${{ github.event.inputs.site }}"
+        env:
+
+
