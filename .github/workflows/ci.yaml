@@ -32,7 +32,7 @@ jobs:
           fi
 
       - name: step2
-        if: ${{ github.ref == "develop" && env.SITE == 'staging' }}
+        if: github.ref == 'develop' && env.SITE == 'staging'
         run: |
           echo '${{ github.ref }}'
           echo 'staing-yes'
