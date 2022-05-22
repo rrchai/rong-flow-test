@@ -29,7 +29,7 @@ jobs:
           else
             echo 'SITE=release' >> $GITHUB_ENV
           fi
-          echo '${{ github.ref }}'
+          echo '${{ github.ref##*/ }}'
 
       - name: step2
         if: github.ref == 'main' && env.SITE == 'release'
