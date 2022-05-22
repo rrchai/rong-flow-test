@@ -37,7 +37,7 @@ jobs:
       - name: step2
         if: env.SITE == 'release'
         run: |
-          echo 'env.REF_NAME'
+          echo '${{env.REF_NAME}}'
 
 
 
