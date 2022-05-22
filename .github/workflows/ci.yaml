@@ -24,17 +24,16 @@ jobs:
     steps:
       - name: Determine deployment sites
         run: |
-          if ${{ github.event.inputs.site == 'staging'}}
-          then
+          if ${{ github.event.inputs.site == 'staging'}}; then
             echo 'SITE=staging' >> $GITHUB_ENV
           else
             echo 'SITE=release' >> $GITHUB_ENV
           fi
+          echo '${{ github.ref }}'
 
       - name: step2
         if: github.ref == 'main' && env.SITE == 'release'
         run: |
-          echo '${{ github.ref }}'
           echo 'staing-yes'
 
 
