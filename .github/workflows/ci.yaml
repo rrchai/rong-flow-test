@@ -30,11 +30,15 @@ jobs:
             echo 'SITE=release' >> $GITHUB_ENV
           fi
           echo '${{ github.ref##*/ }}'
+      
+      - name: Get branch/tag name
+        run: |
+          echo 'REF_NAME=$(echo $GITHUB_REF | cut -d'/' -f 3)' >> $GITHUB_ENV
 
       - name: step2
-        if: github.ref == 'main' && env.SITE == 'release'
+        if: env.SITE == 'release'
         run: |
-          echo 'staing-yes'
+          echo 'env.REF_NAME'
 
 
 
