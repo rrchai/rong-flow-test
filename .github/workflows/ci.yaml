@@ -5,14 +5,12 @@ on:
     branches: main
   workflow_dispatch:
     inputs:
-      site:
-        description: 'which instance site would your like to manually re-deploy?'    
-        required: true
-        type: choice
-        options:
-          - staging
-          - release
-
+      service_branch:
+        description: 'Schematic Service Branch (default is "develop")'    
+        default: 'develop22'
+      schema_branch:
+        description: 'Schema Branch (default is "main")'    
+        default: 'main22'
 
 jobs:
   deployment:
@@ -24,25 +22,22 @@ jobs:
       GITHUB_PAT: ${{ secrets.REPO_PAT }}
 
     steps:
-      # - name: Determine deployment sites
-      #   if: github.event == 'workflow_dispatch'
-      #   run: |
-      #     if ${{ github.event.inputs.site == 'staging'}}; then
-      #       echo 'SITE=staging' >> $GITHUB_ENV
-      #     else
-      #       echo 'SITE=release' >> $GITHUB_ENV
-      #     fi
-      #     echo "REF_NAME=$(echo $GITHUB_REF | cut -d'/' -f 3)" >> $GITHUB_ENV
-
-      - name: step1
-        if: github.event_name == 'workflow_dispatch'
+      - name: Determine deployment sites
         run: |
-          echo "workflow"
+          if ${{ github.event_name == 'workflow_dispatch'}}; then
+            echo 'SERVICE_BRANCH=${{ github.event.inputs.service_branch }}' >> $GITHUB_ENV
+            echo 'SCHEMA_BRANCH=${{ github.event.inputs.schema_branch }}' >> $GITHUB_ENV
+          else
+            echo 'SERVICE_BRANCH=develop' >> $GITHUB_ENV
+            echo 'SCHEMA_BRANCH=main' >> $GITHUB_ENV
+          fi
+  
+          echo "REF_NAME=$(echo $GITHUB_REF | cut -d'/' -f 3)" >> $GITHUB_ENV
 
       - name: step2
-        if:  github.event_name == 'push'
         run: |
-          echo "push"
+          echo "${{ github.event.inputs.SERVICE_BRANCH }}"
+          echo "${{ github.event.inputs.SCHEMA_BRANCH }}"
 
 
 
