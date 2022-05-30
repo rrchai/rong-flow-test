@@ -38,6 +38,7 @@ jobs:
     #       echo "REF_NAME=$(echo $GITHUB_REF | cut -d'/' -f 3)" >> $GITHUB_ENV
     steps:
       - name: step2
+        shell: bash
         run: |
           v1="v1.1.1"
           v2="sss"
