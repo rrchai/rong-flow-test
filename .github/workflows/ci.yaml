@@ -1,6 +1,8 @@
 name: ci
 
 on:
+  push:
+    branches: main
   workflow_dispatch:
     inputs:
       site:
@@ -22,21 +24,25 @@ jobs:
       GITHUB_PAT: ${{ secrets.REPO_PAT }}
 
     steps:
-      - name: Determine deployment sites
+      # - name: Determine deployment sites
+      #   if: github.event == 'workflow_dispatch'
+      #   run: |
+      #     if ${{ github.event.inputs.site == 'staging'}}; then
+      #       echo 'SITE=staging' >> $GITHUB_ENV
+      #     else
+      #       echo 'SITE=release' >> $GITHUB_ENV
+      #     fi
+      #     echo "REF_NAME=$(echo $GITHUB_REF | cut -d'/' -f 3)" >> $GITHUB_ENV
+
+      - name: step1
         if: github.event == 'workflow_dispatch'
         run: |
-          if ${{ github.event.inputs.site == 'staging'}}; then
-            echo 'SITE=staging' >> $GITHUB_ENV
-          else
-            echo 'SITE=release' >> $GITHUB_ENV
-          fi
-          echo "REF_NAME=$(echo $GITHUB_REF | cut -d'/' -f 3)" >> $GITHUB_ENV
-          
+          echo "workflow"
 
       - name: step2
-        if: env.SITE == 'release'
+        if:  github.event == 'push'
         run: |
-          echo "${{ env.REF_NAME }}"
+          echo "push"
 
 
 
