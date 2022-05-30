@@ -38,16 +38,15 @@ jobs:
     #       echo "REF_NAME=$(echo $GITHUB_REF | cut -d'/' -f 3)" >> $GITHUB_ENV
     steps:
       - name: step2
-        shell: bash
         run: |
           v1="v1.1.1"
           v2="sss"
-          if [[$v1 =~ '^v([0-9]+\.){2}[0-9]+$']]; then
+          if [['$v1' =~ '^v([0-9]+\.){2}[0-9]+$']]; then
             echo "v1.1.1-yes"
           else
             echo "v1.1.1-no"
           fi
-          if [[$v2 =~ '^v([0-9]+\.){2}[0-9]+$']]; then
+          if [['$v2' =~ '^v([0-9]+\.){2}[0-9]+$']]; then
             echo "sss-yes"
           else
             echo "sss-no"
