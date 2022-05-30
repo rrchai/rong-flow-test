@@ -36,8 +36,8 @@ jobs:
 
       - name: step2
         run: |
-          echo "${{ github.event.inputs.SERVICE_BRANCH }}"
-          echo "${{ github.event.inputs.SCHEMA_BRANCH }}"
+          echo "${{ env.SERVICE_BRANCH }}"
+          echo "${{ env.SCHEMA_BRANCH }}"
 
 
 
