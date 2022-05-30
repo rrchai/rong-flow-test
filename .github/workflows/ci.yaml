@@ -39,12 +39,12 @@ jobs:
     steps:
       - name: step2
         run: |
-          if [["v1.1.1" =~ '^v([0-9]+\.){2}[0-9]+$']]; then
+          if [[echo "v1.1.1" =~ '^v([0-9]+\.){2}[0-9]+$']]; then
             echo "v1.1.1-yes"
           else
             echo "v1.1.1-no"
           fi
-          if [["sss" =~ '^v([0-9]+\.){2}[0-9]+$']]; then
+          if [[echo "sss" =~ '^v([0-9]+\.){2}[0-9]+$']]; then
             echo "sss-yes"
           else
             echo "sss-no"
