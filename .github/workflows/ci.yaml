@@ -42,7 +42,7 @@ jobs:
         run: |
           REF_TYPE="$(echo $GITHUB_REF | cut -d'/' -f 2)"
           echo $REF_TYPE
-          if [ '$REF_TYPE' = 'tags']; then
+          if [ '$REF_TYPE' == 'tags']; then
             echo 'APP_URL=production' >> $GITHUB_ENV
           else
             echo 'APP_URL=staging' >> $GITHUB_ENV
