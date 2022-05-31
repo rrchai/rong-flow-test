@@ -28,6 +28,7 @@ jobs:
     steps:
       - name: Determine deployment environment variables (manual)
         if: github.event_name == 'workflow_dispatch'
+        shell: bash
         run: |
           echo 'SERVICE_BRANCH=${{ github.event.inputs.service_branch }}' >> $GITHUB_ENV
           echo 'SCHEMA_BRANCH=${{ github.event.inputs.schema_branch }}' >> $GITHUB_ENV
