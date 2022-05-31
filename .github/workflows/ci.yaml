@@ -27,7 +27,6 @@ jobs:
     steps:
       - name: Determine deployment environment variables (manual)
         if: github.event_name == 'workflow_dispatch'
-        shell: bash
         run: |
           echo 'SERVICE_BRANCH=${{ github.event.inputs.service_branch }}' >> $GITHUB_ENV
           echo 'SCHEMA_BRANCH=${{ github.event.inputs.schema_branch }}' >> $GITHUB_ENV
@@ -39,10 +38,11 @@ jobs:
 
       - name: Determine deployment environment variables (push)
         if: github.event_name == 'push'
+        shell: bash
         run: |
           REF_TYPE="$(echo $GITHUB_REF | cut -d'/' -f 2)"
           echo $REF_TYPE
-          if $REF_TYPE = tags; then
+          if [ '$REF_TYPE' = 'tags']; then
             echo 'APP_URL=production' >> $GITHUB_ENV
           else
             echo 'APP_URL=staging' >> $GITHUB_ENV
