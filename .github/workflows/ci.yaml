@@ -40,7 +40,7 @@ jobs:
       - name: Determine deployment environment variables (push)
         if: github.event_name == 'push'
         run: |
-          if github.event.ref_type == 'tag'; then
+          if '${{ github.event.ref_type }} == 'tag'; then
             echo 'APP_URL=production' >> $GITHUB_ENV
           else
             echo 'APP_URL=staging' >> $GITHUB_ENV
