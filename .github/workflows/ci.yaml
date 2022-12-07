@@ -1,60 +1,32 @@
-name: ci
-
+name: 'workflow'
 on:
   push:
-    branches: main
-    tags: 'v[0-9]+.[0-9]+.[0-9]+'
-  workflow_dispatch:
-    inputs:
-      service_branch:
-        description: 'Schematic Service Branch (default is "develop")'    
-        default: 'develop22'
-      schema_branch:
-        description: 'Schema Branch (default is "main")'    
-        default: 'main22'
+    branches:
+      - main
 
 jobs:
-  deployment:
+  test:
     runs-on: ubuntu-latest
-    # This image seems to be based on rocker/r-ver which in turn is based on debian
-    container: rocker/rstudio:4.1.2
-    env:
-      # This should not be necessary for installing from public repo's however remotes::install_github() fails without it.
-      GITHUB_PAT: ${{ secrets.REPO_PAT }}
-      SERVICE_BRANCH: 'develop'
-      SCHEMA_BRANCH: 'main'
-
     steps:
-      - name: Determine deployment environment variables (manual)
-        if: github.event_name == 'workflow_dispatch'
+      - uses: actions/checkout@v3
+
+      - name: mock up request message
         run: |
-          echo 'SERVICE_BRANCH=${{ github.event.inputs.service_branch }}' >> $GITHUB_ENV
-          echo 'SCHEMA_BRANCH=${{ github.event.inputs.schema_branch }}' >> $GITHUB_ENV
-          echo 'APP_URL=staging' >> $GITHUB_ENV
-    
-      - name: Determine deployment environment variables (pull request)
-        if: github.event_name == 'pull_request'
-        run: echo 'APP_URL=testing1' >> $GITHUB_ENV
+          echo 'VERSION=$COMMIT_REF' >> $GITHUB_ENV
+        env:
+          # if it's the release of schematic, get release versioning, otherwise, get commit sha
+          COMMIT_REF: 'blabla'
 
-      - name: Determine deployment environment variables (push)
-        if: github.event_name == 'push'
-        shell: bash
-        run: |
-          # REF_TYPE will be either heads (branch) or tags
-          REF_TYPE="$(echo $GITHUB_REF | cut -d'/' -f 2)"
-          if [ $REF_TYPE == 'tags' ]; then
-            echo "yes"
-            echo 'APP_URL=production' >> $GITHUB_ENV
-          else
-            echo "no"
-            echo 'APP_URL=staging' >> $GITHUB_ENV
-          fi
-
-      - name: step2
-        run: |
-          echo "${{ env.SERVICE_BRANCH }}"
-          echo "${{ env.SCHEMA_BRANCH }}"
-          echo "${{ env.APP_URL }}"
-
-
-
+      - name: Update values.yaml
+        uses: fjogeleit/yaml-update-action@main
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          valueFile: 'test.yaml'
+          propertyPath: 'version.schematic'
+          value: ${{ env.VERSION }}
+          branch: develop-update-schematic
+          targetBranch: main
+          createPR: 'true'
+          description: blabla
+          message: 'Auto update schematic for testing'
+          title: 'Version Updates'
