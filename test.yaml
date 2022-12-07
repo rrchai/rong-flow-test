@@ -33,4 +33,3 @@ style:
     strict_validation: true
 version:
   schematic: $COMMIT_REF
-  schema: null
