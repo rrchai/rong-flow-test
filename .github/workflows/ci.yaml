@@ -21,12 +21,12 @@ jobs:
         uses: fjogeleit/yaml-update-action@main
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          valueFile: 'test.yaml'
-          propertyPath: 'version.schematic'
+          valueFile: test.yaml
+          propertyPath: version.schematic
           value: ${{ env.VERSION }}
           branch: develop-update-schematic
           targetBranch: main
-          createPR: 'true'
+          createPR: true
           description: blabla
-          message: 'Auto update schematic for testing'
-          title: 'Version Updates'
+          message: Auto update schematic for testing
+          title: Version Updates
