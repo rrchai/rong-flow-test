@@ -34,7 +34,7 @@ jobs:
           branch: develop-update-schematic
           targetBranch: main
           createPR: true
-          labels: dependencies
+          labels: 'dependencies'
+          title: Version Updates
           description: blabla
           message: Auto update schematic for testing
-          title: Version Updates
