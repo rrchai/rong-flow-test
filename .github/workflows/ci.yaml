@@ -17,6 +17,13 @@ jobs:
           # if it's the release of schematic, get release versioning, otherwise, get commit sha
           COMMIT_REF: 'blabla'
 
+      - name: create the branch
+        uses: peterjgrainger/action-create-branch@v2.2.0
+        with:
+          branch: 'develop-update-schematic'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Update values.yaml
         uses: fjogeleit/yaml-update-action@main
         with:
