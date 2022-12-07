@@ -12,7 +12,7 @@ jobs:
 
       - name: mock up request message
         run: |
-          echo 'VERSION=$COMMIT_REF' >> $GITHUB_ENV
+          echo 'VERSION=${{ env.COMMIT_REF }}' >> $GITHUB_ENV
         env:
           # if it's the release of schematic, get release versioning, otherwise, get commit sha
           COMMIT_REF: 'blabla'
